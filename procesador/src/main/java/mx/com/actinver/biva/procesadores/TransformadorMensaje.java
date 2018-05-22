@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class TransformadorMensaje implements Processor {
 	@Produce(uri = "activemq:queue:NOTIFICATION.RASTREO")
 	private ProducerTemplate emisora;
-	@Produce(uri = "activemq:queue:HECHOs.RASTREO")
+	@Produce(uri = "activemq:queue:HECHOS.RASTREO")
 	private ProducerTemplate hecho;
 	@Produce(uri = "activemq:queue:PROFUNDIDAD.RASTREO")
 	private ProducerTemplate profundidad;

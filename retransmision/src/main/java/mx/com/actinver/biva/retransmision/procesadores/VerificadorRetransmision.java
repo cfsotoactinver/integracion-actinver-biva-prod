@@ -32,7 +32,7 @@ public class VerificadorRetransmision implements Processor {
 			LOGGER.info("Cargando del Archivo");	
 			try {
 				FileReader fr = new FileReader(
-						"/opt/rh/jbossfusedatos/Secuencias.txt");
+						"/opt/rh/jbossfuse/Secuencias.txt");
 				BufferedReader bf = new BufferedReader(fr);
 				String sCadena="";
 					sCadena = bf.readLine();
@@ -64,19 +64,22 @@ public class VerificadorRetransmision implements Processor {
 				retransmision.setNumeroDeSecuenciaFinal(diferencia);
 				retransmision2.sendBody(retransmision);
 			} else {
-
-				for (Long j = 10l; j >= 1l; j = j - 1l) {
-					if (diferencia % j == 0) {
-						for (Long i = inicio; i <= fin; i = i + j) {
-							retransmision.setSession(session);
-							retransmision.setNumeroDeSecuenciaInicial(i);
-							retransmision.setNumeroDeSecuenciaFinal(j);
-							retransmision2.sendBody(retransmision);
-						}
-						j=0l;
+				Long bloques=10l;
+				System.out.println(diferencia);
+ 				for (Long i = 10l; i >= 1l; i--) {
+					if(diferencia%i==0l){
+						bloques=i;
+						break;
 					}
 				}
+				while(inicio<fin){
+					retransmision.setNumeroDeSecuenciaInicial(inicio);
+					retransmision.setNumeroDeSecuenciaFinal(bloques);
+ 					inicio=inicio+bloques;
 
+				}
+				
+				
 			}
 
 		}

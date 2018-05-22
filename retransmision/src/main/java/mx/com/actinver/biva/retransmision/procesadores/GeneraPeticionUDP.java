@@ -30,23 +30,20 @@ public class GeneraPeticionUDP implements Processor {
 				SolicitudDeRetransmision.class);
 		Long fin = peticion.getNumeroDeSecuenciaFinal();
 		Long inicio = peticion.getNumeroDeSecuenciaInicial();
-		for (Long j = 11l; j >= 1; j--)
-			if ((fin - inicio) % j == 0) {
-				for (Long i = inicio; i <= fin; i = i + j) {
-					SolicitudDeRetransmision petDeRetransmision = new SolicitudDeRetransmision();
-					petDeRetransmision.setSession(peticion.getSession());
-					petDeRetransmision.setNumeroDeSecuenciaInicial(i);
-					petDeRetransmision.setNumeroDeSecuenciaFinal(i + j);
-					solicitaMensajes(petDeRetransmision);
-				}
-			}
+
+		SolicitudDeRetransmision petDeRetransmision = new SolicitudDeRetransmision();
+		petDeRetransmision.setSession(peticion.getSession());
+		petDeRetransmision.setNumeroDeSecuenciaInicial(inicio);
+		petDeRetransmision.setNumeroDeSecuenciaFinal(fin);
+		solicitaMensajes(petDeRetransmision);
+
 	}
 
 	public void solicitaMensajes(SolicitudDeRetransmision peticion)
 			throws Exception {
 		try {
-			LOGGER.info("IP: " + ipFeedA + " Port: " + puertoFeedA + " Message: "
-					+ peticion.toByteArray() + " Longitud: "
+			LOGGER.info("IP: " + ipFeedA + " Port: " + puertoFeedA
+					+ " Message: " + peticion.toByteArray() + " Longitud: "
 					+ peticion.toByteArray().length);
 			byte[] m = peticion.toByteArray();
 			DatagramSocket socketUDP = new DatagramSocket();

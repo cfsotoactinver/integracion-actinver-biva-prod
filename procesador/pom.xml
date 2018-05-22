@@ -15,7 +15,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mx.com.actinver.biva</groupId>
 	<artifactId>procesador</artifactId>
-	<version>1.0</version>
+	<version>1.01</version>
 
 	<packaging>bundle</packaging>
 	<name>Actinver :: Procesador de mensajes ITCH</name>
