@@ -12,7 +12,7 @@
   
   <groupId>com.actinver.biva.persistence</groupId>
   <artifactId>persistence-service</artifactId>
-  <version>1.0.0.35</version>
+  <version>1.0</version>
   <packaging>bundle</packaging>
  
     <properties>

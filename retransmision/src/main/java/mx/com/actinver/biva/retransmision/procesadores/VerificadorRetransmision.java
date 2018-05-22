@@ -34,10 +34,9 @@ public class VerificadorRetransmision implements Processor {
 				FileReader fr = new FileReader(
 						"/opt/rh/jbossfusedatos/Secuencias.txt");
 				BufferedReader bf = new BufferedReader(fr);
-				String sCadena;
-				while ((sCadena = bf.readLine()) != null) {
+				String sCadena="";
 					sCadena = bf.readLine();
-				}
+				
 				Long secrecuperada = Long.parseLong(sCadena);
 				mocSecuencia.put("Secuencia", secrecuperada);
 			} catch (Exception e) {
@@ -71,7 +70,7 @@ public class VerificadorRetransmision implements Processor {
 						for (Long i = inicio; i <= fin; i = i + j) {
 							retransmision.setSession(session);
 							retransmision.setNumeroDeSecuenciaInicial(i);
-							retransmision.setNumeroDeSecuenciaFinal(i + j);
+							retransmision.setNumeroDeSecuenciaFinal(j);
 							retransmision2.sendBody(retransmision);
 						}
 						j=0l;

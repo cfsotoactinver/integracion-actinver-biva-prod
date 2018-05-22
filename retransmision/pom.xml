@@ -7,7 +7,7 @@
 	<groupId>mx.com.actinver.biva</groupId>
 	<artifactId>retransmision-biva</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.0.009</version>
+	<version>1.0</version>
 	<name>Actinver :: Solicitud de retransmision</name>
 	<description>Recibe información vía ITCH desde BIVA</description>
 	<properties>

@@ -23,7 +23,7 @@ public class SolicitudDeRetransmision{
 		ByteBuffer buffer = ByteBuffer.allocate(20);
 		buffer.put(this.session.getBytes(StandardCharsets.UTF_8));
 	    buffer.putLong(this.numeroDeSecuenciaInicial.longValue());
-	    Long requestMessageCount=numeroDeSecuenciaFinal-numeroDeSecuenciaInicial;
+	    Long requestMessageCount=numeroDeSecuenciaFinal;
 	    buffer.putShort(requestMessageCount.shortValue());
 	    return buffer.array();
 	}

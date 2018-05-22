@@ -82,8 +82,8 @@ public class TransformadorMensaje implements Processor {
 				destino.setObjeto(memoria
 						.obtenerNotificacionDeProfundiodadPorCartera(
 								orden.getCarteraDePedidos()).topipes());
-				profundidad.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				profundidad.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
@@ -96,8 +96,10 @@ public class TransformadorMensaje implements Processor {
 				destino.setObjeto(memoria
 						.obtenerNotificacionDeEmisoraPorCartera(
 								orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
+				
+				 
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("EMISORA:" + destino.getObjeto());
@@ -117,8 +119,8 @@ public class TransformadorMensaje implements Processor {
 				destino.setObjeto(memoria
 						.obtenerNotificacionDeProfundiodadPorCartera(
 								orden.getCarteraDePedidos()).topipes());
-				profundidad.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				profundidad.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("PROFUNDIDAD:" + destino.getObjeto());
@@ -131,8 +133,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeEmisoraPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				memoria.eliminarOrdenD(mensajeD);
 				if (orden.getEmisora().equals("SMARTRC")) {
@@ -155,8 +157,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeProfundiodadPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				profundidad.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				profundidad.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("PROFUNDIDAD:" + destino.getObjeto());
@@ -169,8 +171,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeEmisoraPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("EMISORA:" + destino.getObjeto());
@@ -204,8 +206,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeEmisoraPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("EMISORA:" + destino.getObjeto());
@@ -218,8 +220,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeHechoPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				hecho.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				hecho.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("HECHO:" + destino.getObjeto());
@@ -244,8 +246,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeProfundiodadPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				profundidad.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				profundidad.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
@@ -259,8 +261,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeEmisoraPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
@@ -272,8 +274,8 @@ public class TransformadorMensaje implements Processor {
 						+ orden.getSerie());
 				destino.setObjeto(memoria.obtenerNotificacionDeHechoPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				hecho.sendBody(result + "Hora de fin de procesamiento: "
-						+ format.format(new Date()) + destino.getObjeto());
+				hecho.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (orden.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("HECHO:" + destino.getObjeto());
@@ -300,7 +302,8 @@ public class TransformadorMensaje implements Processor {
 
 						.obtenerNotificacionDeEmisoraPorCartera(
 								mensajeP.getOrderBook()).topipes());
-				emisora.sendBody(result+"Hora de fin de procesamiento: "+format.format(new Date())+destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (cartera.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("EMISORA:" + destino.getObjeto());
@@ -313,7 +316,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeHechoPorCartera(mensajeP.getOrderBook())
 						.topipes());
-				hecho.sendBody(result+"Hora de fin de procesamiento: "+format.format(new Date())+destino.getObjeto());
+				hecho.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (cartera.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("HECHO:" + destino.getObjeto());
@@ -335,7 +339,8 @@ public class TransformadorMensaje implements Processor {
 				destino.setObjeto(memoria
 						.obtenerNotificacionDeProfundiodadPorCartera(
 								mensajeH.getOrderBook()).topipes());
-				profundidad.sendBody(result+"Hora de fin de procesamiento: "+format.format(new Date())+destino.getObjeto());
+				profundidad.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 				destinosObjetos.add(destino);
 				if (carteras.getEmisora().equals("SMARTRC")) {
 					LOGGER.info("PROFUNDIDAD:" + destino.getObjeto());
@@ -352,7 +357,8 @@ public class TransformadorMensaje implements Processor {
 
 				.obtenerNotificacionDeEmisoraPorCartera(
 						orden.getCarteraDePedidos()).topipes());
-				emisora.sendBody(result+"Hora de fin de procesamiento: "+format.format(new Date())+destino.getObjeto());
+				emisora.sendBodyAndHeader(result + "Hora de fin de procesamiento: "
+						+ format.format(new Date()) +" "+destino.getObjeto(), "emisoraserie", orden.getEmisora() + " " + orden.getSerie());
 
 				destinosObjetos.add(destino);
 				if (carteras.getEmisora().equals("SMARTRC")) {

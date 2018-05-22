@@ -32,7 +32,7 @@
                     <simple>${in.body}\n</simple>
                 </transform>
                 <wireTap id="respladaMensajeEnLog" uri="file:/opt/rh/jbossfuse?fileName=BIVA-${date:now:ddMMyyyy}.txt&amp;fileExist=Append" />
-                <to id="enviarJMS" uri="activemq:queue:BIVA.ITCH.FEED?deliveryPersistent=true" />
+                <to id="enviarJMS" uri="activemq:topic:BIVA.ITCH.FEED?deliveryPersistent=true" />
             </split>
         </route>
         <!-- Ruta para procesar la retransmision -->

@@ -14,7 +14,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mx.com.actinver.biva</groupId>
 	<artifactId>lector</artifactId>
-	<version>1.0.0.19</version>
+	<version>1.0</version>
 	<packaging>bundle</packaging>
 	<name>Actinver :: Lector de mensajes ITCH</name>
 	<description>Recibe información vía ITCH desde BIVA</description>
