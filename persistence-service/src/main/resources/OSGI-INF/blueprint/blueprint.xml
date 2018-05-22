@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+    http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<cm:property-placeholder id="configuracion" persistent-id="biva.config">
+		<cm:default-properties>
+			<cm:property name="amq.broker.url" value="failover:(tcp://v1plamq01:61616,tcp://v1plamq02:61616)" />
+			<cm:property name="amq.broker.username" value="esb" />
+			<cm:property name="amq.broker.password" value="r3dh4t2017" />
+			<cm:property name="db.as400.address" value="172.16.3.56" />
+			<cm:property name="db.as400.username" value="mgarciaa" />
+			<cm:property name="db.as400.password" value="mexico" />
+		</cm:default-properties>
+	</cm:property-placeholder>
+	<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="brokerURL" value="${amq.broker.url}" />
+		<property name="userName" value="${amq.broker.username}" />
+		<property name="password" value="${amq.broker.password}" />
+	</bean>
+	<bean id="as400poolDS" class="com.ibm.as400.access.AS400JDBCConnectionPoolDataSource">
+		<property name="serverName" value="${db.as400.address}" />
+		<property name="user" value="${db.as400.username}" />
+		<property name="password" value="${db.as400.password}" />
+		
+	</bean>
+	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+		<property name="dataSource" ref="as400poolDS" />
+		<property name="initialSize" value="10" />
+		<property name="maxActive" value="200" />
+		<property name="minIdle" value="5" />
+		<property name="maxIdle" value="10" />
+		<property name="maxWait" value="5" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1200" />
+
+	</bean>
+	<service ref="dataSource" interface="javax.sql.DataSource">
+		<service-properties>
+			<entry key="osgi.jndi.service.name" value="jdbc-as400CPds" />
+		</service-properties>
+	</service>
+	<bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<camelContext xmlns="http://camel.apache.org/schema/blueprint">
+		<route id="Recibidor query">
+			<from uri="activemq:queue:BIVA.ITCH.INSERT?concurrentConsumers=10"/>
+			<log message="QUERY ${body}" />
+			<recipientList delimiter="@">
+				<simple>sql:${body}?dataSource=dataSource</simple>
+			</recipientList>
+			<log message="executed"/>
+		</route>
+		
+
+	</camelContext>
+</blueprint>

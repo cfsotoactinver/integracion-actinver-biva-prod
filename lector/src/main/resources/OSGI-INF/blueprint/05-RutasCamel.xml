@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	~ Copyright 2018 Actinver
+	~ Licensed under the Apache License, Version 2.0 (the "License");
+	~ you may not use this file except in compliance with the License.
+	~ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	~ Unless required by applicable law or agreed to in writing, software
+	~ distributed under the License is distributed on an "AS IS" BASIS,
+	~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	~ See the License for the specific language governing permissions and
+	~ limitations under the License.
+-->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+    <!-- Contexto principal de camel -->
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint" id="contextoCamelLector" allowUseOriginalMessage="false">
+        <!-- Ruta para consumir grupos de mensajes desde el feed A -->
+        <route autoStartup="true" id="consumidorFeedA" routePolicyRef="finalizarRutas">
+            <from id="leerFeeda" uri="netty4:udp://{{biva.itch.feeda.host}}:{{biva.itch.feeda.port}}?sync=false&amp;networkInterface={{biva.itch.feeda.interface}}&amp;broadcast=true&amp;decoders=#lengthFieldBasedFrameDecoder" />
+            <bean id="failoverIdempotentFilterA" method="agregaFeedA" ref="failoverIdempotentFilter" />
+        </route>
+        <!-- Ruta para consumir grupos de mensajes desde el feed B -->
+        <route autoStartup="true" id="consumidorFeedB" routePolicyRef="finalizarRutas">
+            <from id="leerFeedb" uri="netty4:udp://{{biva.itch.feedb.host}}:{{biva.itch.feedb.port}}?sync=false&amp;networkInterface={{biva.itch.feedb.interface}}&amp;broadcast=true&amp;decoders=#lengthFieldBasedFrameDecoder" />
+            <bean id="failoverIdempotentFilterB" method="agregaFeedB" ref="failoverIdempotentFilter" />
+        </route>
+        <route autoStartup="true" id="mensajeria" routePolicyRef="finalizarRutas">
+            <from id="leerMensajeFeedUnico" uri="seda:feedUnico" />
+            <process id="decodificaGrupoDeMensajes" ref="decodificadorFeedUnico" />
+            <split id="divideListaDeJSON">
+                <simple>${body}</simple>
+                <transform id="agregaSaltoDeLinea">
+                    <simple>${in.body}\n</simple>
+                </transform>
+                <wireTap id="respladaMensajeEnLog" uri="file:/opt/rh/jbossfuse?fileName=BIVA-${date:now:ddMMyyyy}.txt&amp;fileExist=Append" />
+                <to id="enviarJMS" uri="activemq:queue:BIVA.ITCH.FEED?deliveryPersistent=true" />
+            </split>
+        </route>
+        <!-- Ruta para procesar la retransmision -->
+        <route autoStartup="false" id="procesarRetransmision">
+            <from id="leerArchivoBinario" uri="file:/opt/rh/retransmisiones?fileName=${file:name.ext}.bin&amp;move=.procesado" />
+            <process id="leeArchivoBinarioRetrnasmision" ref="lectorBinario" />
+            <split id="dividePorArreglosDeBytes">
+                <simple>${body}</simple>
+                <process id="decodificaGrupoRetransmision" ref="decodificadorRetransmision" />
+                <split id="divideListaRetransmision">
+                    <simple>${body}</simple>
+                    <transform id="agregaSaltoDeLinea2">
+						<simple>${in.body}\n</simple>
+					</transform>
+					<wireTap id="respladaMensajeEnLog2" uri="file:/opt/rh/jbossfuse?fileName=BIVA-${date:now:ddMMyyyy}.txt&amp;fileExist=Append" />
+					<to id="enviarJMS2" uri="activemq:topic:BIVA.ITCH.FEED?deliveryPersistent=true" />
+                </split>
+            </split>
+        </route>
+        <!-- Ruta para cargar mensajes desde un archivo -->
+        <route autoStartup="false" id="cargadorDeCatalogo">
+            <from uri="file:/opt/rh?fileName=loger.txt" />
+            <split>
+                <tokenize token="\r\n|\n" />
+                <wireTap id="respladaMensajeEnLog3" uri="file:/opt/rh/jbossfuse?fileName=BIVA-${date:now:ddMMyyyy}.txt&amp;fileExist=Append" />
+				<to id="enviarJMS3" uri="activemq:topic:BIVA.ITCH.FEED?deliveryPersistent=true" />
+            </split>
+        </route>
+    </camelContext>
+</blueprint>

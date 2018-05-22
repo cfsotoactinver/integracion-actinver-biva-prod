@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Copyright 2018 Actinver ~ Licensed under the Apache License, Version 
+	2.0 (the "License"); ~ you may not use this file except in compliance with 
+	the License. ~ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	~ Unless required by applicable law or agreed to in writing, software ~ distributed 
+	under the License is distributed on an "AS IS" BASIS, ~ WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. ~ See the License for 
+	the specific language governing permissions and ~ limitations under the License. -->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd	http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<cm:property-placeholder id="configuracion"
+		persistent-id="biva.config">
+		<cm:default-properties>
+			<cm:property name="biva.itch.feeda.host" value="233.13.30.145" />
+			<cm:property name="biva.itch.feeda.port" value="31818" />
+			<cm:property name="biva.itch.feeda.interface" value="wlp2s0" />
+			<cm:property name="biva.itch.feedb.host" value="233.13.30.177" />
+			<cm:property name="biva.itch.feedb.port" value="31819" />
+			<cm:property name="biva.itch.feedb.interface" value="wlp2s0" />
+			<cm:property name="amq.broker.url"
+				value="failover:(tcp://v1plamq01:61616,tcp://v1plamq02:61616)" />
+			<cm:property name="amq.broker.username" value="esb" />
+			<cm:property name="amq.broker.password" value="r3dh4t2017" />
+			<cm:property name="inicio" value="0 00 03 ? * MON-FRI" />
+			<cm:property name="fin" value="0 11 23 ? * MON-FRI" />
+		</cm:default-properties>
+	</cm:property-placeholder>
+
+</blueprint>
