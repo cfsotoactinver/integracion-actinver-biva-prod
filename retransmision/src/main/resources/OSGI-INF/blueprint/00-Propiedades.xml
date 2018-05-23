@@ -22,8 +22,8 @@
 				value="failover:(tcp://v1plamq01:61616,tcp://v1plamq02:61616)" />
 			<cm:property name="amq.broker.username" value="esb" />
 			<cm:property name="amq.broker.password" value="r3dh4t2017" />
-			<cm:property name="inicioLimpieza" value="0 30 23 ? * MON-FRI" />
-			<cm:property name="finLimpieza" value="0 59 23 ? * MON-FRI" />
+			<cm:property name="inicioLimpieza" value="0 30 03 ? * MON-FRI" />
+			<cm:property name="finLimpieza" value="0 35 03 ? * MON-FRI" />
 			<cm:property name="limpieza" value="60s" />
 		</cm:default-properties>
 	</cm:property-placeholder>

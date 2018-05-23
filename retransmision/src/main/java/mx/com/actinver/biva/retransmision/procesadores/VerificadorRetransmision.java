@@ -73,8 +73,10 @@ public class VerificadorRetransmision implements Processor {
 					}
 				}
 				while(inicio<fin){
+					retransmision.setSession(session);
 					retransmision.setNumeroDeSecuenciaInicial(inicio);
 					retransmision.setNumeroDeSecuenciaFinal(bloques);
+					retransmision2.sendBody(retransmision);
  					inicio=inicio+bloques;
 
 				}
