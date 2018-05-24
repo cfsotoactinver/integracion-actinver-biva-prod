@@ -53,6 +53,7 @@ public class SincronizadorLimpieza implements Processor {
 					notificacionDeEmisora);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		} else if (tipo.contains("Profundidad@")) {
@@ -68,6 +69,7 @@ public class SincronizadorLimpieza implements Processor {
 					notificacionDeProfundidad);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		} else if (tipo.contains("Hecho@")) {
@@ -82,6 +84,7 @@ public class SincronizadorLimpieza implements Processor {
 					.writeValue(this.stringWriter, notificacionDeHecho);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		} else if (tipo.contains("Orden@")) {
@@ -93,10 +96,10 @@ public class SincronizadorLimpieza implements Processor {
 			this.objectMapper.writeValue(this.stringWriter, orden);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		}
-
 		else if (tipo.contains("Compra@")) {
 			Compra compra = (Compra) exchange.getIn().getBody(Compra.class);
 			RegistroGrid registro = new RegistroGrid();
@@ -106,6 +109,7 @@ public class SincronizadorLimpieza implements Processor {
 			this.objectMapper.writeValue(this.stringWriter, compra);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		} else if (tipo.contains("Venta@")) {
@@ -117,6 +121,7 @@ public class SincronizadorLimpieza implements Processor {
 			this.objectMapper.writeValue(this.stringWriter, venta);
 			registro.setValor(this.stringWriter.toString());
 			exchange.getIn().setBody(registro);
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		} else if (tipo.contains("Cartera@")) {
@@ -134,6 +139,7 @@ public class SincronizadorLimpieza implements Processor {
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(true));
 		}else if (tipo.contains("reiniciar")) {
 			indiceNuevo.inicializar();
+			exchange.getIn().setHeader("indice", this.indiceNuevo);
 			exchange.getIn().setHeader("enviaraGrid", Boolean.valueOf(false));
 			exchange.getIn().setHeader("indexar", Boolean.valueOf(false));
 		}
