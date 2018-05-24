@@ -27,7 +27,7 @@
         <property name="indice" ref="indice" />
     </bean>
     <bean id="sincronizacionGridLimpieza" class="mx.com.actinver.biva.procesadores.SincronizadorLimpieza">
-        <property name="indice" ref="indice" />
+        <property name="indiceNuevo" ref="indiceNuevo" />
     </bean>
     <bean id="deserializador" class="mx.com.actinver.biva.procesadores.Deserializador" />
     <bean id="procesadorIndice" class="mx.com.actinver.biva.procesadores.ProcesadorDeIndice">

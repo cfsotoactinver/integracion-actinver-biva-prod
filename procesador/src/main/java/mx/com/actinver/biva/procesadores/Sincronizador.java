@@ -125,7 +125,7 @@ public class Sincronizador
     {
       Compra compra = (Compra)exchange.getIn().getBody(Compra.class);
       RegistroGrid registro = new RegistroGrid();
-      registro.setClave(compra.getIdcompra() + "B");
+      registro.setClave(compra.getIdcompra());
       registro.setTipo("Compra");
       this.indice.getRegistros().add(registro);
       this.stringWriter = new StringWriter();
@@ -139,7 +139,7 @@ public class Sincronizador
     {
       Venta venta = (Venta)exchange.getIn().getBody(Venta.class);
       RegistroGrid registro = new RegistroGrid();
-      registro.setClave(venta.getIdventa() + "S");
+      registro.setClave(venta.getIdventa());
       registro.setTipo("Venta");
       this.indice.getRegistros().add(registro);
       this.stringWriter = new StringWriter();

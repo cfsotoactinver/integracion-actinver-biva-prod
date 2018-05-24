@@ -678,14 +678,14 @@ public class Transformador implements ReglasDeNegocio {
 										niveles.add(posicion, nivel);
 									}
 									niveles.sort(Comparator.comparing(
-									Nivel::getPrecio).reversed());
+									Nivel::getPrecio));
 								} else {
 									nivel.setPrecio(ordenNueva.getPrecio());
 									nivel.setVolumen(ordenNueva.getCantidad());
 									nivel.setNumeroDeOrdenes(1);
 									niveles.add(nivel);
 									niveles.sort(Comparator.comparing(
-									Nivel::getPrecio).reversed());
+									Nivel::getPrecio));
 
 								}
 							}
@@ -764,11 +764,11 @@ public class Transformador implements ReglasDeNegocio {
 		if (orden != null) {
 			String sql=registraEnUhecho(mensajeE, null, null);
 			insert.sendBody(sql);
-			if (orden.getVerboDeLaOrden() != null  && orden.getEliminaOrden().equals("N")) {
+			if (orden.getVerboDeLaOrden() != null  && !orden.getEliminaOrden().equals("E")) {
 				Emisora emisora = memoria.obtenerNotificacionDeEmisoraPorCartera(orden.getCarteraDePedidos());
 				Cartera cartera = memoria.buscarCartera(orden.getCarteraDePedidos());
 				if (orden.getVerboDeLaOrden().equals("B")) {
-					Compra compra = memoria.buscarArregloCompra(orden.getEmisora(), orden.getCarteraDePedidos().toString());
+					Compra compra = memoria.buscarArregloCompra(cartera.getEmisora(), cartera.getCarteraDePedido());
 					if (compra.getNiveles() != null) {
 						List < Nivel > niveles = compra.getNiveles();
 						Nivel nivel = new Nivel();
@@ -792,7 +792,7 @@ public class Transformador implements ReglasDeNegocio {
 
 								}
 							} else if (orden.getCantidad() > mensajeE.getExecutedQuantity()) {
-								nivel = niveles.get(posicion);
+								nivel = niveles.get(niveles.indexOf(precioABuscar));
 								nivel.setPrecio(orden.getPrecio());
 								nivel.setVolumen(nivel.getVolumen() - mensajeE.getExecutedQuantity());
 								niveles.remove(niveles.indexOf(precioABuscar));
@@ -967,21 +967,21 @@ public class Transformador implements ReglasDeNegocio {
 									memoria.eliminaOrdenE(mensajeE.getOrderNumber());
 
 								} else {
-									nivel = niveles.get(posicion);
+									nivel = niveles.get(niveles.indexOf(precioABuscar));
 									nivel.setPrecio(orden.getPrecio());
 									nivel.setVolumen(nivel.getVolumen() - mensajeE.getExecutedQuantity());
 									nivel.setNumeroDeOrdenes(nivel.getNumeroDeOrdenes() - 1);
 									niveles.remove(niveles.indexOf(precioABuscar));
-									niveles.add(posicion, nivel);
+									niveles.add(niveles.indexOf(precioABuscar), nivel);
 									memoria.eliminaOrdenE(mensajeE.getOrderNumber());
 
 								}
 							} else if (orden.getCantidad() > mensajeE.getExecutedQuantity()) {
-								nivel = niveles.get(posicion);
+								nivel = niveles.get(niveles.indexOf(precioABuscar));
 								nivel.setPrecio(orden.getPrecio());
 								nivel.setVolumen(nivel.getVolumen() - mensajeE.getExecutedQuantity());
 								niveles.remove(niveles.indexOf(precioABuscar));
-								niveles.add(posicion, nivel);
+								niveles.add(niveles.indexOf(precioABuscar), nivel);
 								orden.setCantidad(orden.getCantidad() - mensajeE.getExecutedQuantity());
 								memoria.actualizarOrden(orden);
 							}
@@ -1175,7 +1175,7 @@ public class Transformador implements ReglasDeNegocio {
 			if (cartera.getNumeroDeDecimales() != null) {
 				decimales = cartera.getNumeroDeDecimales();
 			}
-			if (orden.getVerboDeLaOrden() != null && orden.getEliminaOrden().equals("N")) {
+			if (orden.getVerboDeLaOrden() != null && !orden.getEliminaOrden().equals("E")) {
 				Emisora emisora = memoria.obtenerNotificacionDeEmisoraPorCartera(orden.getCarteraDePedidos());
 				if (orden.getVerboDeLaOrden().equals("B")) {
 					Compra compra = memoria.buscarArregloCompra(orden.getEmisora(), orden.getCarteraDePedidos().toString());
