@@ -12,7 +12,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mx.com.actinver.biva</groupId>
 	<artifactId>procesador</artifactId>
-	<version>1.07</version>
+	<version>1.010</version>
 
 	<packaging>bundle</packaging>
 	<name>Actinver :: Procesador de mensajes ITCH</name>
@@ -32,8 +32,8 @@
 		<jboss.fuse.bom.version>6.3.0.redhat-262</jboss.fuse.bom.version>
 		<camel.version>2.17.0.redhat-630262</camel.version>
 		<fabric.admin.user>esb</fabric.admin.user>
-        <fabric.admin.password>r3dh4t2017</fabric.admin.password>
-        <fabric.server.address>v1plfabric03</fabric.server.address>
+		<fabric.admin.password>r3dh4t2017</fabric.admin.password>
+		<fabric.server.address>10.14.2.29</fabric.server.address>
 		<fabric.server.port>8181</fabric.server.port>
 	</properties>
 	<distributionManagement>
